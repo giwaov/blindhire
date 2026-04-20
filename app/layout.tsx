@@ -6,6 +6,7 @@ import './globals.css'
 import FooterSection from "@/components/footer"
 import {HeroHeader} from "@/components/header"
 import {Web3Provider} from "@/components/web3-provider"
+import {ThemeProvider} from "@/components/theme-provider"
 
 const _geist = Geist({subsets: ["latin"]})
 const _geistMono = Geist_Mono({subsets: ["latin"]})
@@ -25,14 +26,16 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="en" className="dark">
+        <html lang="en" suppressHydrationWarning>
         <body className="font-sans antialiased">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
         <Web3Provider>
             <HeroHeader/>
             {children}
             <FooterSection/>
             <Analytics/>
         </Web3Provider>
+        </ThemeProvider>
         </body>
         </html>
     )
