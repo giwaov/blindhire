@@ -1,0 +1,7 @@
+node_modules/
+.next/
+.env
+contracts/.env
+contracts/node_modules/
+env.local
+.DS_Store

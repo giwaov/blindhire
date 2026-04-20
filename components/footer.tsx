@@ -1,0 +1,42 @@
+'use client'
+import Link from 'next/link'
+
+export default function FooterSection() {
+    return (
+        <footer className="border-t border-border py-12">
+            <div className="mx-auto max-w-6xl px-6">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+                    <div className="space-y-2">
+                        <p className="font-mono text-lg font-bold">BlindHire</p>
+                        <p className="text-sm text-muted-foreground max-w-xs">Bias-free confidential hiring powered by Fully Homomorphic Encryption on Ethereum.</p>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row gap-8">
+                        <div className="space-y-3">
+                            <p className="font-mono text-xs text-muted-foreground uppercase tracking-widest">App</p>
+                            <div className="flex flex-col gap-2">
+                                <Link href="/employer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Post a Role</Link>
+                                <Link href="/candidate" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Apply</Link>
+                                <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Dashboard</Link>
+                            </div>
+                        </div>
+
+                        <div className="space-y-3">
+                            <p className="font-mono text-xs text-muted-foreground uppercase tracking-widest">Built with</p>
+                            <div className="flex flex-col gap-2">
+                                <a href="https://docs.zama.org" target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Zama FHEVM</a>
+                                <a href="https://github.com/OpenZeppelin/openzeppelin-confidential-contracts" target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">OpenZeppelin Confidential</a>
+                                <a href={`https://sepolia.etherscan.io/address/0x38940809D0e5a390d1d83eF3e871C0ed9A9dea1c`} target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-mono">Contract ↗</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-12 pt-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p className="text-xs text-muted-foreground font-mono">Built for Zama Developer Program — Mainnet Season 2</p>
+                    <p className="text-xs text-muted-foreground font-mono">Deployed on Sepolia · 0x38940809...dea1c</p>
+                </div>
+            </div>
+        </footer>
+    )
+}
