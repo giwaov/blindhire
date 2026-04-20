@@ -5,6 +5,7 @@ import React from 'react'
 import { ConnectWallet } from '@/components/connect-button'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 export const HeroHeader = () => {
     const [menuOpen, setMenuOpen] = React.useState(false)
@@ -22,8 +23,9 @@ export const HeroHeader = () => {
             <nav className="bg-background/50 fixed z-20 w-full border-b backdrop-blur-3xl">
                 <div className="mx-auto max-w-6xl px-6">
                     <div className="flex items-center justify-between py-3 lg:py-4">
-                        <Link href="/" aria-label="home" className="font-mono text-lg font-bold tracking-tight">
-                            BlindHire
+                        <Link href="/" aria-label="home" className="flex items-center gap-2">
+                            <Image src="/icon.svg" alt="BlindHire" width={28} height={28} className="rounded-md"/>
+                            <span className="font-mono text-lg font-bold tracking-tight">BlindHire</span>
                         </Link>
 
                         <div className="hidden lg:flex items-center gap-6">

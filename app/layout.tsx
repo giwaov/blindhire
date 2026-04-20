@@ -13,6 +13,10 @@ const _geistMono = Geist_Mono({subsets: ["latin"]})
 export const metadata: Metadata = {
     title: 'BlindHire — Confidential Hiring on-chain',
     description: 'Bias-free hiring powered by Fully Homomorphic Encryption. Employers and candidates match without revealing private data.',
+    icons: {
+        icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+        apple: '/icon.svg',
+    },
 }
 
 export default function RootLayout({
