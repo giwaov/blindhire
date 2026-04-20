@@ -34,7 +34,9 @@ export interface BlindHireInterface extends Interface {
       | "employerRoles"
       | "getCandidateApplications"
       | "getEmployerRoles"
+      | "getMatchDetails"
       | "getMatchResult"
+      | "getRoleMetadata"
       | "postRole"
       | "roleCount"
       | "roles"
@@ -80,12 +82,20 @@ export interface BlindHireInterface extends Interface {
     values: [AddressLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "getMatchDetails",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getMatchResult",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "getRoleMetadata",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "postRole",
-    values: [BytesLike, BytesLike, BytesLike, BytesLike]
+    values: [BytesLike, BytesLike, BytesLike, BytesLike, string, string, string]
   ): string;
   encodeFunctionData(functionFragment: "roleCount", values?: undefined): string;
   encodeFunctionData(functionFragment: "roles", values: [BigNumberish]): string;
@@ -123,7 +133,15 @@ export interface BlindHireInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getMatchDetails",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getMatchResult",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRoleMetadata",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "postRole", data: BytesLike): Result;
@@ -166,11 +184,16 @@ export namespace MatchComputedEvent {
 }
 
 export namespace RolePostedEvent {
-  export type InputTuple = [roleId: BigNumberish, employer: AddressLike];
-  export type OutputTuple = [roleId: bigint, employer: string];
+  export type InputTuple = [
+    roleId: BigNumberish,
+    employer: AddressLike,
+    title: string
+  ];
+  export type OutputTuple = [roleId: bigint, employer: string, title: string];
   export interface OutputObject {
     roleId: bigint;
     employer: string;
+    title: string;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -226,10 +249,12 @@ export interface BlindHire extends BaseContract {
   applications: TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [string, bigint, string, boolean] & {
+      [string, bigint, string, string, string, boolean] & {
         candidate: string;
         roleId: bigint;
         matched: string;
+        yearsOk: string;
+        scoreOk: string;
         computed: boolean;
       }
     ],
@@ -274,14 +299,37 @@ export interface BlindHire extends BaseContract {
     "view"
   >;
 
+  getMatchDetails: TypedContractMethod<
+    [appId: BigNumberish],
+    [[string, string] & { yearsOk: string; scoreOk: string }],
+    "view"
+  >;
+
   getMatchResult: TypedContractMethod<[appId: BigNumberish], [string], "view">;
+
+  getRoleMetadata: TypedContractMethod<
+    [roleId: BigNumberish],
+    [
+      [string, string, string, string, boolean] & {
+        title: string;
+        description: string;
+        category: string;
+        employer: string;
+        active: boolean;
+      }
+    ],
+    "view"
+  >;
 
   postRole: TypedContractMethod<
     [
       _minYears: BytesLike,
       _minYearsProof: BytesLike,
       _minScore: BytesLike,
-      _minScoreProof: BytesLike
+      _minScoreProof: BytesLike,
+      _title: string,
+      _description: string,
+      _category: string
     ],
     [bigint],
     "nonpayable"
@@ -292,11 +340,14 @@ export interface BlindHire extends BaseContract {
   roles: TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [string, string, string, boolean] & {
+      [string, string, string, boolean, string, string, string] & {
         employer: string;
         minYears: string;
         minScore: string;
         active: boolean;
+        title: string;
+        description: string;
+        category: string;
       }
     ],
     "view"
@@ -314,10 +365,12 @@ export interface BlindHire extends BaseContract {
   ): TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [string, bigint, string, boolean] & {
+      [string, bigint, string, string, string, boolean] & {
         candidate: string;
         roleId: bigint;
         matched: string;
+        yearsOk: string;
+        scoreOk: string;
         computed: boolean;
       }
     ],
@@ -360,8 +413,30 @@ export interface BlindHire extends BaseContract {
     nameOrSignature: "getEmployerRoles"
   ): TypedContractMethod<[employer: AddressLike], [bigint[]], "view">;
   getFunction(
+    nameOrSignature: "getMatchDetails"
+  ): TypedContractMethod<
+    [appId: BigNumberish],
+    [[string, string] & { yearsOk: string; scoreOk: string }],
+    "view"
+  >;
+  getFunction(
     nameOrSignature: "getMatchResult"
   ): TypedContractMethod<[appId: BigNumberish], [string], "view">;
+  getFunction(
+    nameOrSignature: "getRoleMetadata"
+  ): TypedContractMethod<
+    [roleId: BigNumberish],
+    [
+      [string, string, string, string, boolean] & {
+        title: string;
+        description: string;
+        category: string;
+        employer: string;
+        active: boolean;
+      }
+    ],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "postRole"
   ): TypedContractMethod<
@@ -369,7 +444,10 @@ export interface BlindHire extends BaseContract {
       _minYears: BytesLike,
       _minYearsProof: BytesLike,
       _minScore: BytesLike,
-      _minScoreProof: BytesLike
+      _minScoreProof: BytesLike,
+      _title: string,
+      _description: string,
+      _category: string
     ],
     [bigint],
     "nonpayable"
@@ -382,11 +460,14 @@ export interface BlindHire extends BaseContract {
   ): TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [string, string, string, boolean] & {
+      [string, string, string, boolean, string, string, string] & {
         employer: string;
         minYears: string;
         minScore: string;
         active: boolean;
+        title: string;
+        description: string;
+        category: string;
       }
     ],
     "view"
@@ -437,7 +518,7 @@ export interface BlindHire extends BaseContract {
       MatchComputedEvent.OutputObject
     >;
 
-    "RolePosted(uint256,address)": TypedContractEvent<
+    "RolePosted(uint256,address,string)": TypedContractEvent<
       RolePostedEvent.InputTuple,
       RolePostedEvent.OutputTuple,
       RolePostedEvent.OutputObject

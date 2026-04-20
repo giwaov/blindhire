@@ -26,14 +26,14 @@ export default function FooterSection() {
                             <div className="flex flex-col gap-2">
                                 <a href="https://docs.zama.org" target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Zama FHEVM</a>
                                 <a href="https://github.com/OpenZeppelin/openzeppelin-confidential-contracts" target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">OpenZeppelin Confidential</a>
-                                <a href="https://sepolia.etherscan.io/address/0x38940809D0e5a390d1d83eF3e871C0ed9A9dea1c" target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-mono">Contract ↗</a>
+                                <a href="https://sepolia.etherscan.io/address/0xa0bB4e71d0d28068b39DA4c22EFeB8f9A72dfD2e" target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors font-mono">Contract ↗</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="mt-12 pt-6 border-t border-border flex items-center justify-end">
-                    <p className="text-xs text-muted-foreground font-mono">Deployed on Sepolia · 0x38940809...dea1c</p>
+                    <p className="text-xs text-muted-foreground font-mono">Deployed on Sepolia · 0xa0bB4e71...dfD2e</p>
                 </div>
             </div>
         </footer>

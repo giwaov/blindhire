@@ -1,4 +1,4 @@
-export const BLINDHIRE_ADDRESS = "0x38940809D0e5a390d1d83eF3e871C0ed9A9dea1c"
+export const BLINDHIRE_ADDRESS = "0xa0bB4e71d0d28068b39DA4c22EFeB8f9A72dfD2e"
 
 export const BLINDHIRE_ABI = [
   {
@@ -28,7 +28,8 @@ export const BLINDHIRE_ABI = [
     "anonymous": false,
     "inputs": [
       { "indexed": true, "name": "roleId", "type": "uint256" },
-      { "indexed": true, "name": "employer", "type": "address" }
+      { "indexed": true, "name": "employer", "type": "address" },
+      { "indexed": false, "name": "title", "type": "string" }
     ],
     "name": "RolePosted",
     "type": "event"
@@ -51,7 +52,10 @@ export const BLINDHIRE_ABI = [
       { "name": "_minYears", "type": "bytes32" },
       { "name": "_minYearsProof", "type": "bytes" },
       { "name": "_minScore", "type": "bytes32" },
-      { "name": "_minScoreProof", "type": "bytes" }
+      { "name": "_minScoreProof", "type": "bytes" },
+      { "name": "_title", "type": "string" },
+      { "name": "_description", "type": "string" },
+      { "name": "_category", "type": "string" }
     ],
     "name": "postRole",
     "outputs": [{ "name": "", "type": "uint256" }],
@@ -62,6 +66,29 @@ export const BLINDHIRE_ABI = [
     "inputs": [{ "name": "appId", "type": "uint256" }],
     "name": "getMatchResult",
     "outputs": [{ "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "name": "appId", "type": "uint256" }],
+    "name": "getMatchDetails",
+    "outputs": [
+      { "name": "yearsOk", "type": "bytes32" },
+      { "name": "scoreOk", "type": "bytes32" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "name": "roleId", "type": "uint256" }],
+    "name": "getRoleMetadata",
+    "outputs": [
+      { "name": "title", "type": "string" },
+      { "name": "description", "type": "string" },
+      { "name": "category", "type": "string" },
+      { "name": "employer", "type": "address" },
+      { "name": "active", "type": "bool" }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
