@@ -1,5 +1,5 @@
 {
-  "buildCommand": "NEXT_TURBOPACK=0 next build",
+  "buildCommand": "next build --webpack",
   "framework": "nextjs",
   "installCommand": "pnpm install"
 }
