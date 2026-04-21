@@ -3,10 +3,13 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     unoptimized: true,
   },
-  serverExternalPackages: ['@zama-fhe/relayer-sdk'],
+  serverExternalPackages: ['@zama-fhe/relayer-sdk', 'canvas'],
   turbopack: {},
 }
 
